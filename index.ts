@@ -1,5 +1,5 @@
 import http from "http";
-import logger from "./helper/logger";
+import logger from "./helper/LoggerManager";
 import { json, urlencoded } from "body-parser";
 import express from "express";
 import cors from "cors";
