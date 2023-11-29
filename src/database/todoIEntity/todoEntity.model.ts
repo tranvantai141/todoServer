@@ -1,4 +1,4 @@
-import { UserEntity } from "../_modelExport";
+import { UserEntity } from "../_modelDataBaseExport";
 import { sequelize } from "../dbConnect";
 import { DataTypes, Model, Optional } from "sequelize";
 
@@ -58,7 +58,7 @@ TodoEntity.init(
     },
   },
   {
-    sequelize,
+    sequelize: sequelize,
     paranoid: true,
   }
 );

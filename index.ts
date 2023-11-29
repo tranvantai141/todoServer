@@ -5,23 +5,21 @@ import express from "express";
 import cors from "cors";
 import mainRoutes from "./src/api/mainRoutes";
 import { errorMiddleware, notFoundMiddleware } from "./helper/exceptions";
-import dbInit from "./src/database/dbInit";
+import DataBaseConfig from "./src/database/DataBaseConfig";
 
 class App {
   public app: express.Application;
   private server: http.Server;
-  private port: number;
 
-  constructor(port: number = 1234) {
+  constructor() {
     this.app = express();
-    this.port = port;
     this.config();
     this.server = http.createServer(this.app);
     this.listen();
   }
 
   private config() {
-    dbInit();
+    DataBaseConfig.dbInit();
     this.app.use(cors());
     /** support application/json type post data */
     this.app.use(json());
@@ -36,8 +34,10 @@ class App {
   }
 
   private listen() {
-    this.server.listen(this.port, () => {
-      logger.info(`Server listening on port ${this.port} - env: dev`);
+    this.server.listen(process.env.PORT ?? 1234, () => {
+      logger.info(
+        `Server listening on port ${process.env.PORT ?? 1234} - env: dev`
+      );
     });
   }
 }

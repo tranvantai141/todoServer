@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import UserEntityService from "../../database/userEntity/userEntity.service";
-import { toUser } from "./userEntity.mapping";
+import { userDTO } from "./userEntity.DTO";
 import ResponseStatusCode from "../../../helper/ResponseStatusCode";
 
 class UserEntityController {
@@ -9,7 +9,7 @@ class UserEntityController {
       const { id } = req.params;
       const user = await UserEntityService.getById(parseInt(id));
       if (user) {
-        res.status(ResponseStatusCode.success.okey).json(toUser(user));
+        res.status(ResponseStatusCode.success.okey).json(userDTO(user));
         return;
       }
       res
@@ -32,7 +32,7 @@ class UserEntityController {
       );
       res.status(ResponseStatusCode.success.okey).json({
         ...result,
-        data: result.data.map((user) => toUser(user)),
+        data: result.data.map((user) => userDTO(user)),
       });
     } catch (err: any) {
       res.status(ResponseStatusCode.serverError.bad_gateway).json(err.message);
@@ -42,7 +42,7 @@ class UserEntityController {
   public async register(req: Request, res: Response): Promise<void> {
     try {
       const user = await UserEntityService.create(req.body);
-      res.status(ResponseStatusCode.success.okey).json(toUser(user));
+      res.status(ResponseStatusCode.success.okey).json(userDTO(user));
     } catch (err: any) {
       res.status(ResponseStatusCode.serverError.bad_gateway).json(err.message);
     }
@@ -52,7 +52,7 @@ class UserEntityController {
     try {
       const { id } = req.body;
       const user = await UserEntityService.update(id, req.body);
-      res.status(ResponseStatusCode.success.okey).json(toUser(user));
+      res.status(ResponseStatusCode.success.okey).json(userDTO(user));
     } catch (err: any) {
       res.status(ResponseStatusCode.serverError.bad_gateway).json(err.message);
     }

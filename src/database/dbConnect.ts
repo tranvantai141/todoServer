@@ -2,25 +2,25 @@ import { Options, Sequelize } from "sequelize";
 import { config } from "dotenv";
 
 const envFound = config({
-  path: `env/.env.${process.env.NODE_ENV || "development"}`,
+  path: `env/.env.${process.env.NODE_ENV ?? "development"}`,
 });
 
 if (!envFound) throw new Error("Couldn't find .env file");
 
 const dbConfig: Options = {
-  username: "kai",
-  password: "Hello1234@",
-  host: "localhost",
-  database: "todoServer",
+  username: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  host: process.env.DB_HOST,
+  database: process.env.DB_NAME,
   dialect: "postgres",
   dialectOptions: {
     connectTimeout: 60000,
   },
-  port: 5432,
+  port: parseInt(process.env.DB_PORT as string),
   pool: {
-    min: 5,
-    max: 10,
-    idle: 10,
+    min: parseInt(process.env.DB_POOL_MIN as string),
+    max: parseInt(process.env.DB_POOL_MAX as string),
+    idle: parseInt(process.env.DB_POOL_IDLE as string),
   },
 };
 let sequelize: Sequelize = new Sequelize(dbConfig);

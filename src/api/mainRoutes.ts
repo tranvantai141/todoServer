@@ -1,5 +1,6 @@
 import { Router } from "express";
 import UserEntityRouter from "./userEntity/userEntity.routes";
+import TodoEntityRouter from "./todoEntity/todoEntity.routes";
 
 class MainRoutes {
   public routers: Router;
@@ -10,7 +11,9 @@ class MainRoutes {
   }
 
   private config() {
-    this.routers.use("/users", new UserEntityRouter().router);
+    this.routers.use("/user", new UserEntityRouter().router);
+
+    this.routers.use("/todo", new TodoEntityRouter().router);
   }
 }
 

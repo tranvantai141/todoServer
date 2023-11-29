@@ -1,7 +1,7 @@
 import { IUserOutput } from "../../database/userEntity/userEntity.model";
 import { IUserEntity } from "./userEntity.interface";
 
-export const toUser = (userOutput: IUserOutput): IUserEntity => {
+export const userDTO = (userOutput: IUserOutput): IUserEntity => {
   return {
     id: userOutput.id,
     email: userOutput.email,
